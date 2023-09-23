@@ -9,6 +9,6 @@ class BirthdayForm(forms.ModelForm):
         model = Birthday
         # Указываем, что надо отобразить все поля.
         fields = '__all__'
-        widget = {
+        widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'})
         }
