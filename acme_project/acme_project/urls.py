@@ -6,6 +6,8 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+handler404 = 'core.views.page_not_found'
+
 urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('', include('pages.urls')),
@@ -20,4 +22,12 @@ urlpatterns = [
         name='registration',
     ),
     path('birthday/', include('birthday.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) 
+]
+
+# Если проект запущен в режиме разработки...
+if settings.DEBUG:
+    import debug_toolbar
+    # Добавить к списку urlpatterns список адресов из приложения debug_toolbar:
+    urlpatterns += (path('__debug__/', include(debug_toolbar.urls)),)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
